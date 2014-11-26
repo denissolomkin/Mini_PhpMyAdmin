@@ -1,0 +1,81 @@
+<? if($data['error']) :?>
+<div class="bs-callout bs-callout-danger"><h4><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span> <?=$data['error']?></h4></div>
+<? elseif($data['timer']) :?>
+<div class="bs-callout bs-callout-info"><h4><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span> <?='Total: '.$data['count'].' '.$data['timer']?></h4></div>
+<? endif ?>
+<script>
+
+    function checkID(){
+        if($('#queryID').val())
+            $('button#queryDelete').show();
+        else {
+            $('button#queryDelete').hide();
+        }
+    }
+
+</script>
+<form class="form-horizontal" id="queryForm" role="form" method="post" action="../" target="_parent">
+    <input type="hidden" id="queryIDlast" name="queryIDlast" value="<?=$_POST['queryID']?>">
+    <input type="hidden" id="queryDO" name="queryDO">
+
+<div id="query_debug">
+    <div class="form-group">
+        <div class="col-sm-12" style="margin-bottom: 5px;">
+        <pre style="margin: 0;"><?=$data['debug'];?></pre>
+            </div>
+        <div class="col-sm-12">
+
+            <button type="button" class="btn btn-default btn-xs" onclick="checkID();$('#query_debug, #query_form').toggle();">
+                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Edit
+            </button>
+
+            <? if(!$_GET['queryID']) :?>
+            <button type="button" class="btn btn-default btn-xs" onclick="$('#queryDO').val('save');$('#queryForm').submit();">
+                <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Save
+            </button>
+            <? endif ?>
+
+            <button type="submit" class="btn btn-primary btn-xs" style="float: right;">
+                <span class="glyphicon glyphicon-play-circle" aria-hidden="true"></span> Run
+            </button>
+        </div>
+    </div>
+</div>
+
+<div id="query_form" style="display: none">
+    <div class="form-group">
+        <div class="col-sm-12" style="margin-bottom: 5px;">
+            <textarea id="query" rows="2" class="form-control" name="query"><?=$data['last']?></textarea>
+        </div>
+        <div class="col-sm-12">
+
+            <button type="button" class="btn btn-default btn-xs" onclick="$('#query_debug, #query_form').toggle();$('#queryID').val($('#queryIDlast').val());$('#query').val($('#query_debug').find('pre').text());">
+                <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span> Cancel
+            </button>
+
+            <button type="button" class="btn btn-default btn-xs" onclick="$('#queryID').val('');$('#query').val('');checkID();">
+                <span class="glyphicon glyphicon-file" aria-hidden="true"></span> New
+            </button>
+
+            <button type="button" class="btn btn-default btn-xs" onclick="$('#queryDO').val('save');$('#queryForm').submit();">
+                <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Save
+            </button>
+
+            <button type="button" class="btn btn-danger btn-xs" id="queryDelete" onclick="$('#queryDO').val('delete');$('#queryForm').submit();">
+                <span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span> Delete
+            </button>
+
+
+            <button type="submit" class="btn btn-primary btn-xs" style="float: right;">
+                <span class="glyphicon glyphicon-play-circle" aria-hidden="true"></span> Run
+            </button>
+
+            <input type="text" readonly style="background: none;font-weight:bold;border:0;float: right;" id="queryID" name="queryID" value="<?=$_POST['queryID']?>">
+
+            <label for="queryID" style="background: none;border:0;float: right;">Query #</label>
+        </div>
+    </div>
+</div>
+</form>
+
+        <div style="">

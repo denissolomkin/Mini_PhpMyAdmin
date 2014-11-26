@@ -1,0 +1,38 @@
+
+<table class="table tables table-striped">
+
+    <thead><tr>
+        <? if($data['table'])
+        foreach($data['table'][current(array_keys($data['table']))] as $key=>$value):?>
+        <th><nobr><?
+        echo (($_GET['order']==$key.' ASC')
+        ?
+            '<a href="?query='.($_POST['query']?$_POST['query']:$_GET['query']).'&order='.$key.' DESC&start='.$_GET['from'].'"><span class="glyphicon glyphicon-sort-by-attributes" aria-hidden="true"></span>'
+            :
+            (($_GET['order']==$key.' DESC')
+            ?
+            '<a href="?query='.($_POST['query']?$_POST['query']:$_GET['query']).'&order='.$key.' ASC&start='.$_GET['from'].'"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span>'
+                :
+                '<a href="?query='.($_POST['query']?$_POST['query']:$_GET['query']).'&order='.$key.' DESC&start='.$_GET['from'].'">'
+                    )
+                    )." $key</a>";
+                ?>
+                </nobr></th>
+        <? endforeach ?>
+    </tr>
+    </thead>
+
+    <tbody>
+
+    <? if($data['table'])
+    foreach($data['table'] as $title=>$table): ?>
+    <tr>
+        <? foreach($table as $key=>$value): ?>
+        <td> <?=$value?></td>
+
+
+        <? endforeach ?>    </tr>
+    <? endforeach ?>
+
+    </tbody>
+</table>

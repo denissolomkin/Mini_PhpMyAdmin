@@ -1,0 +1,15 @@
+<?
+
+$image=array(
+    "location"=>"glyphicon-cloud",
+    "database"=>"glyphicon-hdd",
+    "table"=>"glyphicon-th-large"
+);
+$data=array_filter($data);
+foreach($data as $key=>$value)
+    {
+        $href[]=$key.'='.$value;
+        $bread[]="<a href='?".implode('&',$href)."'><span class='glyphicon ".$image[$key]."' aria-hidden='true'></span> $value</a>";
+    }
+echo implode (' &raquo; ',$bread);
+?>

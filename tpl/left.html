@@ -1,0 +1,40 @@
+<ul id="myTab" class="nav nav-tabs" style="padding: 10px 0 0 10px;">
+    <li class="active"><a href="#left_tables" data-toggle="tab"><?=($data['object']?$data['object']:'Tables')?> <span class="badge"><?=count($data['table'])?></span></a></li>
+    <li><a href="#left_queries" data-toggle="tab">Queries <span class="badge"><?=count($data['query'])?></span></a></li>
+</ul>
+<?
+$image=array(
+    "location"=>"glyphicon-cloud",
+    "database"=>"glyphicon-hdd",
+    "table"=>"glyphicon-th-large"
+);
+?>
+
+<div id="TabContent" class="tab-content">
+    <div class="tab-pane fade in active" id="left_tables">
+        <table class="table tables table-striped">
+
+            <? if($data['table'])
+            foreach($data['table'] as $table): ?>
+            <tr><td><a href="?<?=($data['object']?$data['object']:'table')?>=<?=$table[current(array_keys($table))]?>"><span class="glyphicon <?=($data['object']?$image[$data['object']]:$image['table'])?>" aria-hidden="true"></span> <?=$table[current(array_keys($table))]?></td></tr>
+            <? endforeach ?>
+
+        </table>
+    </div>
+    <div class="tab-pane fade" id="left_queries">
+        <table class="table tables table-striped">
+
+            <? if($data['query'])
+            foreach($data['query'] as $table): ?>
+            <tr><td style="cursor: pointer;" onclick="
+            $('#queryID').val($(this).find('span').html().replace('#',''));
+            checkID();
+            $('#query').val($(this).children('pre').text().replace($(this).find('span').html()+' ',''));
+            $('#query_debug').hide();$('#query_form').show(); ">
+                <pre style="white-space: pre-wrap;padding: 0;margin: 0;background: none;border: 0;"><span class="badge" style="float:left;"><?=($table['id'])?></span> <?=$table['query']?></pre></td></tr>
+            <? endforeach ?>
+
+        </table>
+    </div>
+</div>
+<div style="clear: both;"></div>
